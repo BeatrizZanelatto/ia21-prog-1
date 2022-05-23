@@ -1,0 +1,30 @@
+import * as readline from 'readline'
+import { stdin as input, stdout as output } from 'process'
+const rl = readline.createInterface({ input, output })
+const question = q => new Promise((rs, rj) => rl.question(q + ' ', a => rs(a)))
+
+let soma = 0
+let count = 0
+let media
+
+while (true) {
+    let strNota = await question(`Digite o valor da ${count + 1}° nota para cacular a média entre os valores inseridos ou:`)
+    if (strNota.toUpperCase() == 'G') break
+    let nota = parseFloat(strNota)
+
+    if (isNaN(nota) || nota < 0) {
+        console.log(`\x1b[31m[ ERRO ] Por favor digite um número valido.\x1b[0m`)
+        continue
+    }
+    soma = soma + nota
+    count++
+}
+
+if (count <= 0) {
+    console.log(`\x1b[31m[ ERRO ] Nenhum valor foi digitado para calcular média.\x1b[0m`)
+    process.exit()
+}
+
+media = soma / count
+console.log(`\x1b[36m[ RESULTADO ] A média de todos os valores informados é ${media}\x1b[0m`)
+process.exit()
